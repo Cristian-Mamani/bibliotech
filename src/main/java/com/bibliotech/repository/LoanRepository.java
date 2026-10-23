@@ -36,7 +36,7 @@ public class LoanRepository {
     /** Préstamos sin devolver cuya fecha de vencimiento ya pasó (vencen antes de {@code today}). */
     public List<Loan> findOverdueByStudent(Long studentId, LocalDate today) {
         return findActiveByStudent(studentId).stream()
-                .filter(l -> l.getDueDate().isBefore(today))
+                .filter(l -> l.getDueDate().isAfter(today))
                 .toList();
     }
 }
