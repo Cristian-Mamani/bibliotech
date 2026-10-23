@@ -6,6 +6,7 @@ Sistema de préstamos bibliográficos (backend Spring Boot).
 
 - Un estudiante no puede tener más de 3 préstamos activos.
 - No se presta un libro sin ejemplares disponibles.
+- Un estudiante con préstamos vencidos (sin devolver y con fecha de vencimiento anterior a hoy) no puede solicitar otro préstamo.
 
 ## Ejecutar
 
