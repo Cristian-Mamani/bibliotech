@@ -32,6 +32,11 @@ public class LoanService {
         Book book = books.findById(bookId)
                 .orElseThrow(() -> new BusinessRuleException("Libro no encontrado"));
 
+        LocalDate today = LocalDate.now();
+
+        if (!loans.findOverdueByStudent(student.getId(), today).isEmpty()) {
+            throw new BusinessRuleException("El estudiante tiene préstamos vencidos y no puede solicitar otro préstamo");
+        }
         if (loans.countActiveByStudent(student.getId()) >= MAX_ACTIVE_LOANS) {
             throw new BusinessRuleException("El estudiante alcanzó el límite de préstamos activos");
         }
@@ -40,7 +45,6 @@ public class LoanService {
         }
 
         book.decreaseCopies();
-        LocalDate today = LocalDate.now();
         return loans.save(new Loan(student.getId(), book.getId(), today, today.plusDays(LOAN_DAYS)));
     }
 }
